@@ -25,6 +25,11 @@ def save_cache():
         print("Saved hash cache to file.")
 
 
+def clean_cash():
+    keys_to_delete = [path for path in hash_cache if not os.path.exists(path)]
+    for key in keys_to_delete:
+        del hash_cache[key]
+        logging.info(f"Removed stale cache entry: {key}")
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Folder Synchronizer with Hash Check")
@@ -33,6 +38,7 @@ def parse_arguments():
     parser.add_argument("log_file", help="Path to the log file")
     parser.add_argument("interval", type=int, help="Synchronization interval in seconds")
     parser.add_argument("--algo", default="blake2b", help="Hash algorithm to use (default: blake2b)")
+    parser.add_argument("--once", action="store_true", help="Run sync only once and exit")
     return parser.parse_args()
 
 def setup_logging(log_file_path):
@@ -102,14 +108,21 @@ def main():
     logging.info("Starting folder synchronization...")
 
     try:
-        while True:
+        if args.once:
             sync_folders(args.source, args.replica, args.algo)
+            clean_cash()
             save_cache()
-            logging.info("Synchronization complete. Waiting for next interval...")
-            time.sleep(args.interval)
+            logging.info("Synchronization complete (once).")
+        else:
+            while True:
+                sync_folders(args.source, args.replica, args.algo)
+                clean_cash()
+                save_cache()
+                logging.info("Synchronization complete. Waiting for next interval...")
+                time.sleep(args.interval)
     except KeyboardInterrupt:
-        logging.info("Synchronization stopped by user.")
-        save_cache()
+            logging.info("Synchronization stopped by user.")
+            save_cache()
 
 if __name__ == "__main__":
     main()
