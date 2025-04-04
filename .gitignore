@@ -174,8 +174,7 @@ cython_debug/
 .pypirc
 
 #my
-*.log
-*.log.txt
+log.txt
 hash_cache.json
 /source/
 /replica/
