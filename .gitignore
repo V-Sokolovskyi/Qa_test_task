@@ -172,3 +172,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#my
+*.log
+*.log.txt
+hash_cache.json
+/source/
+/replica/
+__pycache__/
+*.pyc
