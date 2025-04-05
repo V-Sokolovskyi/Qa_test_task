@@ -4,9 +4,9 @@ A simple Python script that performs **one-way synchronization** between two fol
 ## Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [Run Tests](@run-tests)
-4. [Project Structure](@project-structure)
-5. [License](@license)
+3. [Run Tests](#run-tests)
+4. [Project Structure](#project-structure)
+5. [License](#license)
 
 
 ---
