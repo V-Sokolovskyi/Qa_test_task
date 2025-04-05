@@ -1,13 +1,26 @@
-# Qa_test_task 
+# Qa_test_task - Folder Synchronization Tool
 A simple Python script that performs **one-way synchronization** between two folders (`source` ➝ `replica`) with support for periodic syncing, file hashing, logging, and basic testing.
 
+---
+
+## 📂 Features
+
+- 🔄 One-way folder sync (source → replica)
+- ⏱ Periodic syncing with customizable interval
+- 🧠 Uses file hashing (`blake2b`, `md5`, etc.) to detect changes
+- 📄 Logs operations (created, deleted, updated files)
+- 📦 CLI interface via `argparse`
+- ✅ Includes unit tests (via `pytest`)
+- 🧪 Fake test data generator using `Faker`
+
+---
+  
 ## Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Run Tests](#run-tests)
 4. [Project Structure](#project-structure)
 5. [License](#license)
-
 
 ---
 
