@@ -52,17 +52,22 @@ And these **optional arguments**:
 ---
 
 ## Examples
-
 #### Run once (no interval, just sync immediately):
 
 ```bash
 python main.py source replica log.txt 0 --once
+```
 
 #### Run every 10 seconds:
-python main.py source replica log.txt 10
 
+```bash
+python main.py source replica log.txt 10
+```
 #### Use a different hashing algorithm (e.g., md5):
+
+```bash
 python main.py source replica log.txt 5 --algo md5
+```
 
 
 
