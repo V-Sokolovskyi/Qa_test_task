@@ -4,6 +4,9 @@ A simple Python script that performs **one-way synchronization** between two fol
 ## Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
+3. [Run Tests](@run-tests)
+4. [Project Structure](@project-structure)
+5. [License](@license)
 
 
 ---
@@ -49,9 +52,9 @@ And these **optional arguments**:
 | `--algo`     | Hashing algorithm to compare files (`md5`, `blake2b`, etc.) | `blake2b` |
 | `--once`     | If set, performs sync once and exits                 | `False`   |
 
----
 
-## Examples
+
+### Examples
 #### Run once (no interval, just sync immediately):
 
 ```bash
@@ -69,10 +72,57 @@ python main.py source replica log.txt 10
 python main.py source replica log.txt 5 --algo md5
 ```
 
+---
+## Run Tests
 
+### All tests are in `test/`
+- `conftest.py` defines a **fixture** that:
+  - creates test folders/files using `Faker`
+  - cleans them up after tests complete
+- Tests are marked with `@pytest.mark.sync` for targeted execution
+  
+#### Example test command
+```bash
+pytest -m sync -s
+```
+This will:
 
+ - use the setup_test_data fixture from conftest.py
 
+ - run only tests marked @pytest.mark.sync
 
+ - show all logging output from your sync logic
+
+---
+
+## Project Structure
+```bash
+
+├── main.py               # Entry point: starts sync process
+├── requirements.txt      # Project dependencies
+├── pytest.ini            # Pytest configuration (markers, logging)
+├── conftest.py           # Pytest fixture to init logging for tests
+├── README.md             # Project documentation
+├── .gitignore            # Files to ignore in Git
+├── sync_tool/            # Core functionality
+│   ├── __init__.py
+│   ├── arg_parse.py      # CLI argument parser
+│   ├── cashe_utils.py    # Cache for file hashes
+│   ├── hash_utils.py     # File hashing logic
+│   ├── logger.py         # Logging setup
+│   └── sync_logic.py     # Folder synchronization logic
+├── test/                 # Unit tests with Pytest
+│   ├── test_sync.py      # Test for syncing logic
+│   ├── utils.py          # Fake file/folder generator (Faker)
+│   └── conftest.py       # Test data fixture
+
+```
+
+---
+
+## License
+
+This project is distributed under the terms of the [MIT License](LICENSE).
 
 
 
