@@ -1,8 +1,8 @@
 import os
 import shutil
 from faker import Faker
-
-
+import logging
+logger = logging.getLogger()
 
 
 class Fake_data():
@@ -14,6 +14,7 @@ class Fake_data():
             file_path = os.path.join(folder_name,file_name)
             with open(file_path, "w", encoding="utf=8")as f:
                 f.write(fake.text())
+            logger.info(f"Created file: {file_path}")
 
     def fake_data_delete(self,folder_path):
         for item in os.listdir(folder_path):
@@ -22,6 +23,7 @@ class Fake_data():
                 os.remove(item_path)
             elif os.path.isdir(item_path):
                 shutil.rmtree(item_path)
+            logger.info(f"Removed file: {item_path}")
 
     def feke_folder_create(self, base_folder,count_folder, count_file_in_folder):
         fake = Faker()
@@ -30,6 +32,7 @@ class Fake_data():
             foldr_path = os.path.join(base_folder, folder_name)
             os.makedirs(foldr_path, exist_ok=True)
             Fake_data.fake_data_create(self,foldr_path, count_file_in_folder)
+            logger.info(f"Created directory: {foldr_path}")
 
 
 def count_of_files(folder):
@@ -37,4 +40,3 @@ def count_of_files(folder):
     for root, _, files in os.walk(folder):
         count += len(files)
     return count
-print(count_of_files("replica"))

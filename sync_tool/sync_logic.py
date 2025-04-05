@@ -1,17 +1,17 @@
 import os
 import shutil
 import logging
-from sync_tool.cashe_utils import Cashe
+from sync_tool.cashe_utils import Cache
 from sync_tool.hash_utils import hash_file
 
-def file_changed(source_file, replica_file, algo, cashe:Cashe):
+def file_changed(source_file, replica_file, algo, cache:Cache):
     if not os.path.exists(replica_file):
         return True
-    source_hash =  cashe.hash_cache.get(source_file)
+    source_hash =  cache.hash_cache.get(source_file)
     if not source_hash:
 
         source_hash = hash_file(source_file, algo)
-        cashe.hash_cache[source_file]= source_hash
+        cache.hash_cache[source_file]= source_hash
 
     replica_hash = hash_file(replica_file, algo)
     if source_hash != replica_hash:
@@ -19,7 +19,7 @@ def file_changed(source_file, replica_file, algo, cashe:Cashe):
         return True
     return False
 
-def sync_folders(source, replica, algo, cashe:Cashe):
+def sync_folders(source, replica, algo, cache:Cache):
     for root, dirs, files in os.walk(source):
         rel_path = os.path.relpath(root, source)
         replica_root = os.path.join(replica, rel_path)
@@ -30,9 +30,9 @@ def sync_folders(source, replica, algo, cashe:Cashe):
         for file in files:
             source_file = os.path.join(root, file)
             replica_file = os.path.join(replica_root, file)
-            if file_changed(source_file, replica_file, algo, cashe):
+            if file_changed(source_file, replica_file, algo, cache):
                 shutil.copy2(source_file, replica_file)
-                cashe.hash_cache[source_file] = hash_file(source_file, algo)
+                cache.hash_cache[source_file] = hash_file(source_file, algo)
                 logging.info(f"Copied file: {source_file} -> {replica_file}")
 
     for root, dirs, files in os.walk(replica, topdown=False):
