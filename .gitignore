@@ -176,6 +176,6 @@ cython_debug/
 #my
 log.txt
 hash_cache.json
-.gitkeep
+
 __pycache__/
 *.pyc
